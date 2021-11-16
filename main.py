@@ -20,16 +20,6 @@ def load_json_building(file_name) -> bld.Building:
         print(err)
 
 
-# def load_json_elevator(self, file_name):
-#     try:
-#         with open(file_name, "r+") as f:
-#             my_d = json.load(f)
-#             e = elv.Elevator(my_d["_id"], my_d["_speed"], my_d["_minFloor"], my_d["_maxFloor"],
-#                              my_d["_closeTime"], my_d["_openTime"], my_d["_startTime"], my_d["_stopTime"])
-#     except IOError as err:
-#         print(err)
-
-
 def load_csv_call(file_name):
     calls = []
     with open(file_name) as f:
@@ -50,8 +40,8 @@ def call_to_csv(call_list, file_name):
 
 
 if __name__ == '__main__':
-    path_Json = "Ex1_input/Ex1_Buildings/B1.json"
-    path_csv = "Ex1_input/Ex1_Calls/Calls_a.csv"
+    path_Json = "Ex1_input/Ex1_Buildings/B2.json"
+    path_csv = "Ex1_input/Ex1_Calls/Calls_b.csv"
 
     MyBuilding = load_json_building(path_Json)
     # print(MyBuilding)
@@ -59,6 +49,8 @@ if __name__ == '__main__':
     # for i in range(MyBuilding.getNumofElevators()):
     #     print(MyBuilding.getElevetor(i),"\n")
 
+    path ='output/csv/'
     MyCsv = load_csv_call(path_csv)
-    # print(MyCsv)
-    call_to_csv(MyCsv, 'newCsv2.csv')
+    for c in MyCsv:
+        c.allocated_to =0
+    call_to_csv(MyCsv, 'output/csv/newCsv2.csv')
