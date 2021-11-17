@@ -3,6 +3,7 @@ import csv
 from Classes import Building as bld
 from Classes import Elevator as elv
 from Classes import CallforElevator as call
+import Allocation
 
 
 def load_json_building(file_name) -> bld.Building:
@@ -40,17 +41,15 @@ def call_to_csv(call_list, file_name):
 
 
 if __name__ == '__main__':
-    path_Json = "Ex1_input/Ex1_Buildings/B2.json"
-    path_csv = "Ex1_input/Ex1_Calls/Calls_b.csv"
+    path_Json = "Ex1_input/Ex1_Buildings/Custom1.json"
+    path_csv = "Ex1_input/Ex1_Calls/Calls_a.csv"
 
     MyBuilding = load_json_building(path_Json)
-    # print(MyBuilding)
-    # num = MyBuilding.getNumofElevators()
-    # for i in range(MyBuilding.getNumofElevators()):
-    #     print(MyBuilding.getElevetor(i),"\n")
-
-    path ='output/csv/'
     MyCsv = load_csv_call(path_csv)
-    for c in MyCsv:
-        c.allocated_to =0
-    call_to_csv(MyCsv, 'output/csv/newCsv2.csv')
+
+    aloc = Allocation(MyBuilding,MyCsv)
+    for c in range(len(MyCsv)):
+        MyCsv[c].allocated_to = aloc.allocation[c]
+
+    call_to_csv(MyCsv, 'output/csv/Allocation_Test_1.csv')
+

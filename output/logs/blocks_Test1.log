@@ -1,0 +1,27 @@
+Ex1 (OOP) Simulator log: stage Ex1_input/Ex1_Buildings/Custom1.json,  output/csv/Test2.csv
+0.0,OOP_Ex1_Elevator_Simulator
+0.0,Simulated Building, Building [-2,10]
+0) ex1.Elevator_A, Elev_, id,0,  speed, 1.0, open: 0.0,  start: 0.0, close: 0.0,  stop: 0.0
+
+0.0,Simulated Period starTime,0.0,  endTime,131.0,  dt,1.0
+0.0,Simulated  calls,Elevator log, size: 3
+0.0,**** Simulation starts!! ****
+3.0,Elevator call,3.0,2,4,1,0, got allocated to elevator, 0
+3.0, elevID,0,  pos,0,  cmd, goto,2
+5.0,Elev,0,  arrived at src, 2, Elevator call,3.0,2,4,2,0
+5.0, elevID,0,  pos,2,  cmd, goto,4
+7.0,Elev,0,  arrived at dest, 4, this call is done!, Elevator call,3.0,2,4,3,0, Done, dt, 4.0
+10.0,Elevator call,10.0,9,5,1,0, got allocated to elevator, 0
+10.0, elevID,0,  pos,4,  cmd, goto,9
+11.0,Elevator call,11.0,7,10,1,0, got allocated to elevator, 0
+11.0, elevID,0,  pos,5,  cmd, stop,7
+13.0,Elev,0,  arrived at src, 7, Elevator call,11.0,7,10,2,0
+13.0, elevID,0,  pos,7,  cmd, goto,9
+15.0,Elev,0,  arrived at src, 9, Elevator call,10.0,9,5,2,0
+15.0, elevID,0,  pos,9,  cmd, goto,10
+16.0,Elev,0,  arrived at dest, 10, this call is done!, Elevator call,11.0,7,10,3,0, Done, dt, 5.0
+16.0, elevID,0,  pos,10,  cmd, goto,5
+21.0,Elev,0,  arrived at dest, 5, this call is done!, Elevator call,10.0,9,5,3,0, Done, dt, 11.0
+22.0,************* Simulation Ended ************
+Code Owners,209632009,212343461,  Building_file,Ex1_input/Ex1_Buildings/Custom1.json,  Calls,output/csv/Test2.csv
+Total waiting time: 20.0,  average waiting time per call: 6.666666666666667,  unCompleted calls,0,  certificate, -107955433

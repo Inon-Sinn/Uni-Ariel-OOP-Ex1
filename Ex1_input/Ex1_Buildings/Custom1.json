@@ -1,0 +1,16 @@
+{
+  "_minFloor": -2,
+  "_maxFloor": 20,
+  "_elevators": [
+    {
+      "_id": 0,
+      "_speed": 1.0,
+      "_minFloor": -2,
+      "_maxFloor": 10,
+      "_closeTime": 0.0,
+      "_openTime": 0.0,
+      "_startTime": 0.0,
+      "_stopTime": 0.0
+    }
+  ]
+}
