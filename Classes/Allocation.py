@@ -1,6 +1,5 @@
-import Classes
-from Classes import CallforElevator as cl
-import Block as blk
+from Classes.CallforElevator import CallforElevator as cl
+from Classes.Block import Block as blk
 
 
 def add(call: cl, block_list: list):
