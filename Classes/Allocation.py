@@ -5,9 +5,11 @@ from Classes.Block import Block as blk
 def add(call: cl, block_list: list, elev):
     stop = elev.closeTime + elev.openTime + elev.startTime + elev.stopTime
     c_place = add_call_time(call.time, block_list, elev.speed)
-    src_place = add_stop(call.src, c_place, block_list, False, elev.speed, stop)
-    dest_place = add_stop(call.dest, src_place, block_list, True, elev.speed, stop)
-    add_people(c_place, dest_place, block_list)
+    src_place = add_stop(call.src, c_place, block_list, False, elev.speed, stop, [False])
+    Empty = [False]
+    dest_place = add_stop(call.dest, src_place, block_list, True, elev.speed, stop, Empty)
+    if not Empty[0]:
+        add_people(c_place, dest_place, block_list)
 
 
 def add_call_time(time, block_list, speed):
@@ -22,19 +24,20 @@ def add_call_time(time, block_list, speed):
         if block_list[i].time <= time <= block_list[i + 1].time:
             new_place = block_list[i].place  # block_list[i].place + (time-block_list[i].time) UNFINISHED
             if block_list[i].place < block_list[i + 1].place:
-                new_place += (time - block_list[i]) * speed
+                new_place += (time - block_list[i].time) * speed
             else:
                 if block_list[i].place > block_list[i + 1].place:
-                    new_place -= (time - block_list[i]) * speed
+                    new_place -= (time - block_list[i].time) * speed
             new_block2 = blk(True, block_list[i].type, time, new_place, block_list[i].people + 1)
             block_list.insert(i + 1, new_block2)
             return i + 1
     return 0
 
 
-def add_stop(place, last_place, block_list, dest_bool, speed, stop):  # UNFINISHED
+def add_stop(place, last_place, block_list, dest_bool, speed, stop, empty):  # UNFINISHED
     if last_place == len(block_list) - 1:
-        calc = calc_time(last_place, place, speed)
+        empty[0] = True
+        calc = calc_time(block_list[last_place].place, place, speed)
         if dest_bool:  # for when we are adding a destination and not the src
             block_list.append(blk(False, block_list[last_place].type, block_list[last_place].time + calc, place,
                                   block_list[last_place].people))
@@ -43,14 +46,15 @@ def add_stop(place, last_place, block_list, dest_bool, speed, stop):  # UNFINISH
             block_list.append(
                 blk(False, 0, block_list[last_place].time + calc + stop, place, block_list[last_place].people - 1,
                     True))
+            return last_place + 3
         else:  # for when we are adding a source
             ty_src = calc_type(block_list[last_place].place, place)
             block_list.append(
                 blk(False, ty_src, block_list[last_place].time + calc, place, block_list[last_place].people))
             block_list.append(
                 blk(False, ty_src, block_list[last_place].time + calc + stop, place, block_list[last_place].people))
-        return last_place + 1
-    for i in range(len(block_list) - 1):
+            return last_place + 2
+    for i in range(last_place, len(block_list) - 1):
         if (block_list[i].place == place == block_list[i + 1].place) & (
                 block_list[i + 1].going_out_bool):  # People going in or out at the same place
             if dest_bool:
@@ -73,16 +77,18 @@ def add_stop(place, last_place, block_list, dest_bool, speed, stop):  # UNFINISH
         if (block_list[i + 1].type == 0) & ((block_list[i].type == tp) | (
                 tp == 0)):  # check for the thing with two people of the entering and going for the same place
             block_list[i + 1].type = block_list[i].type
-            calc = calc_time(block_list[i + 1], place, speed)
+            calc = calc_time(block_list[i + 1].place, place, speed)
             block_list.insert(i + 2,
-                              blk(False, block_list[i].type, block_list[i + 1] + calc, place, block_list[i + 1].people))
+                              blk(False, block_list[i].type, block_list[i + 1].time + calc, place,
+                                  block_list[i + 1].people))
+            block_list.insert(i + 3, blk(False, block_list[i].type, block_list[i + 1].time + calc + stop, place,
+                                         block_list[i + 1].people))
             if dest_bool:
-                block_list.insert(i + 3, blk(False, block_list[i].type, block_list[i + 1] + calc + stop, place,
+                block_list.insert(i + 4, blk(False, 0, block_list[i + 1].time + calc + stop, place,
                                              block_list[i + 1].people - 1, True))
             else:
-                block_list.insert(i + 3, blk(False, block_list[i].type, block_list[i + 1] + calc + stop, place,
+                block_list.insert(i + 4, blk(False, 0, block_list[i + 1].time + calc + stop, place,
                                              block_list[i + 1].people))
-            block_list.insert(i + 4, blk(False, 0, block_list[i + 1] + calc, place, block_list[i + 1].people))
             update_list(i + 4, block_list, stop, speed)
             return i + 4
 
@@ -90,13 +96,14 @@ def add_stop(place, last_place, block_list, dest_bool, speed, stop):  # UNFINISH
 
 
 def update_list(place, block_list, time, speed):  # not including place
-    for i in range(place, len(block_list)):
-        if block_list[i].call_time:
-            call_time = block_list.pop(i)
-            call_place = add_call_time(call_time.time, block_list, speed)
-            add_people(call_place, i, block_list)
-        else:
-            block_list[i].time += time
+    for i in range(place + 1, len(block_list)):
+        if i<len(block_list):
+            if block_list[i].call_time:
+                call_time = block_list.pop(i)
+                call_place = add_call_time(call_time.time, block_list, speed)
+                add_people(call_place, i, block_list)
+            else:
+                block_list[i].time += time
 
 
 def calc_type(place_before, place_now):
@@ -110,13 +117,13 @@ def calc_type(place_before, place_now):
 
 def calc_time(place_before, place_now, speed):
     dist = place_before - place_now
-    if (dist < 0):
+    if dist < 0:
         dist = place_now - place_before
     return dist / speed
 
 
 def add_people(call_place, dest_place, block_list):
-    for i in range(call_place, dest_place):  # Not including dest_place so check it works!
+    for i in range(call_place + 1, dest_place + 1):  # Not including dest_place so check it works!
         block_list[i].people += 1
 
 
@@ -157,7 +164,9 @@ class Allocation:
     def allocate_call(self, call):
         temporary_total_time_List = list()
         for elev in range(len(self.total_List)):  # goes to over the elvetors for the calculation
-            list_copy = self.total_List[elev].copy()
+            list_copy = list()
+            for i in self.total_List[elev]:
+                list_copy.append(i.__copy__())
             add(call, list_copy, self.building.getElevetor(elev))
             total_time = total_time_calculator(list_copy)
             temporary_total_time_List.append(total_time - self.total_time_list[elev])

@@ -1,1 +1,2 @@
 java -jar libs/Ex1_checker_V1.2_obf.jar 209632009,212343461 Ex1_input/Ex1_Buildings/B1.json output/csv/newCsv2.csv output/logs/out_basics.log
+java -jar libs/Ex1_checker_V1.2_obf.jar 209632009,212343461 Ex1_input/Ex1_Buildings/B1.json Ex1_input/Ex1_Calls/Calls_a.csv output/logs/out1_a.log
