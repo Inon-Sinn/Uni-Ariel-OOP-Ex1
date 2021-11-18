@@ -2,6 +2,7 @@ from Classes.CallforElevator import CallforElevator as cl
 from Classes.Block import Block as blk
 
 
+# The main function which allocates the call to the elevator in the right place
 def add(call: cl, block_list: list, elev):
     stop = elev.closeTime + elev.openTime + elev.startTime + elev.stopTime
     c_place = add_call_time(call.time, block_list, elev.speed)
@@ -12,6 +13,7 @@ def add(call: cl, block_list: list, elev):
         add_people(c_place, dest_place, block_list)
 
 
+# Add calls this function to allocate the time of call
 def add_call_time(time, block_list, speed):
     last = len(block_list) - 1
     if block_list[last].time <= time:  # Adding a new block to the end the list
@@ -34,6 +36,7 @@ def add_call_time(time, block_list, speed):
     return 0
 
 
+# Add calls this function to allocate the src and dest of the call
 def add_stop(place, last_place, block_list, dest_bool, speed, stop, empty):  # UNFINISHED
     if last_place == len(block_list) - 1:
         empty[0] = True
@@ -94,10 +97,10 @@ def add_stop(place, last_place, block_list, dest_bool, speed, stop, empty):  # U
 
     return 0
 
-
+# A helping function for add_stop and add_call_time
 def update_list(place, block_list, time, speed):  # not including place
     for i in range(place + 1, len(block_list)):
-        if i<len(block_list):
+        if i < len(block_list):
             if block_list[i].call_time:
                 call_time = block_list.pop(i)
                 call_place = add_call_time(call_time.time, block_list, speed)
@@ -105,7 +108,7 @@ def update_list(place, block_list, time, speed):  # not including place
             else:
                 block_list[i].time += time
 
-
+# A helping function for add_stop and add_call_time
 def calc_type(place_before, place_now):
     tp = 0
     if place_before < place_now:
@@ -114,19 +117,19 @@ def calc_type(place_before, place_now):
         tp = -1
     return tp
 
-
+# A helping function for add_stop and add_call_time
 def calc_time(place_before, place_now, speed):
     dist = place_before - place_now
     if dist < 0:
         dist = place_now - place_before
     return dist / speed
 
-
+# A helping function for add_stop and add_call_time
 def add_people(call_place, dest_place, block_list):
     for i in range(call_place + 1, dest_place + 1):  # Not including dest_place so check it works!
         block_list[i].people += 1
 
-
+# Calculates the total time it takes to allocate all the people given to the elevator until now
 def total_time_calculator(blocklist):
     total_time = 0
     for i in range(len(blocklist) - 1):  # with work with next so i want 'i' to only got up to one before the last
@@ -138,7 +141,8 @@ def total_time_calculator(blocklist):
 
 class Allocation:
 
-    def __init__(self, building, call_list):
+    def __init__(self, building,
+                 call_list):  # The allocation happens in the init so we only have to create a new Allocation
         self.building = building
         self.call_list = call_list
         self.total_time = 0  # helper
@@ -161,6 +165,7 @@ class Allocation:
     def update_total_time(self, time):
         self.total_time += time
 
+    # Gets a call and then allocates it to elevator in which total amount of time the call ads is the minimum
     def allocate_call(self, call):
         temporary_total_time_List = list()
         for elev in range(len(self.total_List)):  # goes to over the elvetors for the calculation

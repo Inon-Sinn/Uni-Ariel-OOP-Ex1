@@ -8,7 +8,7 @@ import sys
 import os
 
 
-def load_json_building(file_name) -> bld:
+def load_json_building(file_name) -> bld:  # Gets a json file and turn it into a building
     try:
         with open(file_name, "r+") as f:
             my_d = json.load(f)
@@ -23,7 +23,7 @@ def load_json_building(file_name) -> bld:
         print(err)
 
 
-def load_csv_call(file_name):
+def load_csv_call(file_name):  # Gets a Csv file and turns it a list of CallforElevator objects
     calls = []
     with open(file_name) as f:
         csvreader = csv.reader(f)
@@ -33,7 +33,7 @@ def load_csv_call(file_name):
     return calls
 
 
-def call_to_csv(call_list, file_name):
+def call_to_csv(call_list, file_name):  # Gets list of CallforElevator objects and turns it back into a Csv file
     rows = []
     for c in call_list:
         rows.append(["Elevator call", c.time, c.src, c.dest, c.state, c.allocated_to])
@@ -42,7 +42,7 @@ def call_to_csv(call_list, file_name):
         cswriter.writerows(rows)
 
 
-def main():
+def main():  # The Algorithem for getting the input through the Terminal, i got help from friends for this one
     path_json = ""
     path_csv = ""
     if len(sys.argv) <= 1:
@@ -75,7 +75,7 @@ def main():
 
     MyBuilding = load_json_building(path_json)
     MyCsv = load_csv_call(path_csv)
-    aloc = alc(MyBuilding, MyCsv)
+    aloc = alc(MyBuilding, MyCsv)  # Allocates the calls to elevators
 
     # each call in the list_of_calls is allocated to an elev now, extract this data to a new csv file!
     new_file_name = "output/csv/Result_B1_b.csv"
