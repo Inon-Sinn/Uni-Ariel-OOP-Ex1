@@ -31,9 +31,27 @@ def add_call_time(time, block_list, speed):
 
 
 def add_stop(place, last_place, block_list, dest_bool, speed):  # UNFINISHED
+    if last_place == len(block_list) - 1:
+        if dest_bool:  # for when we are adding a destination and not the src
+            print("hi")
+        else:  # for when we are adding a source
+            print("hi")
     for i in range(len(block_list) - 1):
-        print("hi")
-    
+        if (block_list[i].place <= place <= block_list[i + 1].place) | (
+                block_list[i].place >= place >= block_list[i + 1].place):
+            print("hi")
+        tp = 0
+        if block_list[i + 1].place < place:
+            tp = 1
+        if block_list[i + 1].place > place:
+            tp = -1
+        if (block_list[i + 1].type == 0) & ((block_list[i].type == tp) | (
+                tp == 0)):  # check for the thing with two people of the entering and going for the same place
+            if tp == 0:
+                print("hi")
+            else:
+                print("hi")
+
     return 0
 
 
