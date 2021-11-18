@@ -9,7 +9,7 @@ def add(call: cl, block_list: list, speed):
     add_people(c_place, dest_place, block_list)
 
 
-def add_call_time(time, block_list, speed):  # UNFINISHED
+def add_call_time(time, block_list, speed):
     last = len(block_list) - 1
     if block_list[last].time <= time:  # Adding a new block to the end the list
         new_block = blk(block_list[last - 1].type, time, block_list[last - 1].place, block_list[last - 1].people + 1)
@@ -17,8 +17,13 @@ def add_call_time(time, block_list, speed):  # UNFINISHED
         return last + 1
 
     for i in range(len(block_list) - 1):  # Inserting the block somewhere in between
-        if block_list[i].time <= time <= block_list[i + 1]:
-            new_place = 0  # block_list[i].place + (time-block_list[i].time) UNFINISHED
+        if block_list[i].time <= time <= block_list[i + 1].time:
+            new_place = block_list[i].place  # block_list[i].place + (time-block_list[i].time) UNFINISHED
+            if block_list[i].place < block_list[i + 1].place:
+                new_place += (time - block_list[i]) * speed
+            else:
+                if block_list[i].place > block_list[i + 1].place:
+                    new_place -= (time - block_list[i]) * speed
             new_block2 = blk(block_list[i].type, time, new_place, block_list[i].people + 1)
             block_list.insert(i + 1, new_block2)
             return i + 1
@@ -26,6 +31,9 @@ def add_call_time(time, block_list, speed):  # UNFINISHED
 
 
 def add_stop(place, last_place, block_list, dest_bool, speed):  # UNFINISHED
+    for i in range(len(block_list) - 1):
+        print("hi")
+    
     return 0
 
 
