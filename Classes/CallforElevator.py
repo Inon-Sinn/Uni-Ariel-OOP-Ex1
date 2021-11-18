@@ -1,7 +1,7 @@
 class CallforElevator:
 
-    #INIT=0, GOING2SRC=1, GOIND2DEST=2, DONE=3; - state
-    #UP=1, DOWN=-1; - type
+    # INIT=0, GOING2SRC=1, GOIND2DEST=2, DONE=3; - state
+    # UP=1, DOWN=-1; - type
     def __init__(self, time, src, dest, state, allocated_to):
         self.state = int(state)
         self.time = float(time)
@@ -32,7 +32,9 @@ class CallforElevator:
         return self.allocated_to
 
     def __str__(self):
-        return "state:{state} time:{time} src:{src} dest:{dest} type:{type} acllocated_to:{allo}\n".format(state=self.state,time=self.time,src=self.src,dest=self.dest,type=self.type,allo=self.allocated_to)
+        return "state:{state} time:{time} src:{src} dest:{dest} type:{type} acllocated_to:{allo}\n".format(
+            state=self.state, time=self.time, src=self.src, dest=self.dest, type=self.type, allo=self.allocated_to)
 
     def __repr__(self):
-        return "state:{state} time:{time} src:{src} dest:{dest} type:{type} acllocated_to:{allo}\n".format(state=self.state,time=self.time,src=self.src,dest=self.dest,type=self.type,allo=self.allocated_to)
+        return "state:{state} time:{time} src:{src} dest:{dest} type:{type} acllocated_to:{allo}\n".format(
+            state=self.state, time=self.time, src=self.src, dest=self.dest, type=self.type, allo=self.allocated_to)

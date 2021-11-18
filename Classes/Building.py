@@ -1,4 +1,4 @@
-class Building():
+class Building:
     def __init__(self, minFloor, maxFloor, elevList):
         self.minFloor = minFloor
         self.maxFloor = maxFloor

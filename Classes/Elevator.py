@@ -35,9 +35,9 @@ class Elevator:
 
     def __str__(self):
         ans1 = "id:{id}\nspeed:{speed}\nminFloor:{min}\nmaxFloor:{max}\n".format(id=self.id, speed=self.speed,
-                                                                                min=self.minFloor, max=self.maxFloor)
+                                                                                 min=self.minFloor, max=self.maxFloor)
         ans2 = "closeTime:{close}\nopenTime:{open}\nstartTime{start}\nstopTime:{stop}".format(close=self.closeTime,
                                                                                               open=self.openTime,
                                                                                               start=self.startTime,
                                                                                               stop=self.stopTime)
-        return ans1+ans2
+        return ans1 + ans2
