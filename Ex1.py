@@ -92,15 +92,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    # path_Jso = "Ex1_input/Ex1_Buildings/B1.json"
-    # # path_cs = "Ex1_input/Ex1_Calls/Calls_a.csv"
-    # path = "Ex1_input/Ex1_Calls/Calls_c.csv"
-    #
-    # MyBuilding = load_json_building(path_Jso)
-    # MyCsv = load_csv_call(path)
-    #
-    # aloc = alc(MyBuilding, MyCsv)
-    # for c in range(len(MyCsv)):
-    #     MyCsv[c].allocated_to = aloc.allocation[c]
-    #
-    # call_to_csv(MyCsv, 'output/csv/Allocation_Test_1.csv')
