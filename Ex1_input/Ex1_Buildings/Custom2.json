@@ -7,10 +7,10 @@
       "_speed": 1.0,
       "_minFloor": -2,
       "_maxFloor": 20,
-      "_closeTime": 0.0,
-      "_openTime": 0.0,
-      "_startTime": 0.0,
-      "_stopTime": 0.0
+      "_closeTime": 2.0,
+      "_openTime": 2.0,
+      "_startTime": 3.0,
+      "_stopTime": 3.0
     }
   ]
 }
